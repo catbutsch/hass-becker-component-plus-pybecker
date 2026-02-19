@@ -27,7 +27,7 @@ COMMAND_PAIR2 = 0x81  # pair button pressed for 3 seconds (without releasing)
 COMMAND_PAIR3 = 0x82  # pair button pressed for 6 seconds (without releasing)
 COMMAND_PAIR4 = 0x83  # pair button pressed for 10 seconds (without releasing)
 
-COMMAND_FORCEUP = 0x60  # Force move up, ignore a blocking rain sensor 
+COMMAND_FORCEUP = 0x60  # Force move up, ignore a blocking rain sensor, up+down pressed simultaneously
 
 COMMAND_CLEARPOS = 0x90
 COMMAND_CLEARPOS2 = 0x91
