@@ -27,6 +27,8 @@ COMMAND_PAIR2 = 0x81  # pair button pressed for 3 seconds (without releasing)
 COMMAND_PAIR3 = 0x82  # pair button pressed for 6 seconds (without releasing)
 COMMAND_PAIR4 = 0x83  # pair button pressed for 10 seconds (without releasing)
 
+COMMAND_FORCEUP = 0x60  # Force move up, ignore a blocking rain sensor 
+
 COMMAND_CLEARPOS = 0x90
 COMMAND_CLEARPOS2 = 0x91
 COMMAND_CLEARPOS3 = 0x92
@@ -63,6 +65,10 @@ class Becker:
         if not units and init_dummy:
             self.db.init_dummy()
 
+        # Log DB content
+        _LOGGER.info("Current DB content...")
+        self.db.output()
+        
         # Start communicator thread
         self.communicator.start()
 
@@ -89,6 +95,8 @@ class Becker:
             codes.append(generate_code(channel, unit, COMMAND_UP))
         elif cmd == "UP2":
             codes.append(generate_code(channel, unit, COMMAND_UP5))
+        elif cmd == "FORCEUP":
+            codes.append(generate_code(channel, unit, COMMAND_FORCEUP))
         elif cmd == "HALT":
             codes.append(generate_code(channel, unit, COMMAND_HALT))
         elif cmd == "RELEASE":
@@ -178,7 +186,7 @@ class Becker:
             return
 
         # device check implemented in BeckerCommunicator
-
+        _LOGGER.debug("Sending on unit: %d channel: %d command: %s", un, ch, cmd)
         if un > 0:
             unit = self.db.get_unit(un)
             await self.run_codes(ch, unit, cmd, test)
@@ -204,6 +212,15 @@ class Becker:
             :type channel: str
         """
         await self.send(channel, "UP2")
+        
+    async def force_up(self, channel):
+        """
+            Send the command to force move up independently from rain sensor for a given channel.
+
+            :param channel: the channel on which the shutter is listening
+            :type channel: str
+        """
+        await self.send(channel, "FORCEUP")
 
     async def move_down(self, channel):
         """
