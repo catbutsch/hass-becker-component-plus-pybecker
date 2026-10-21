@@ -35,7 +35,7 @@ MESSAGE = re.compile(
     + ETX, re.I
 )
 
-COMMANDS = {b'0': 'RELEASE', b'1': 'HALT', b'2': 'UP', b'4': 'DOWN', b'8': 'TRAIN'}
+COMMANDS = {b'0': 'RELEASE', b'1': 'HALT', b'2': 'UP', b'4': 'DOWN', b'6': 'FORCEUP', b'7': 'FORCEUP', b'8': 'TRAIN'}
 COMMUNICATION_TIMEOUT = 0.3
 
 _LOGGER = logging.getLogger(__name__)
