@@ -462,7 +462,7 @@ class BeckerEntity(CoverEntity, RestoreEntity):
             elif cmd_arg == COMMANDS['up_intermediate'] and self._intermediate_position:
                 self._travel_to_position(self._intermediate_pos_up)
                 self._tilt_timeout = time.time()        # reset timeout
-            elif command == COMMANDS['up']:
+            elif command == COMMANDS['up'] or command == COMMANDS['forceup']:
                 self._travel_to_position(OPEN_POSITION)
                 self._tilt_timeout = time.time() + TILT_RECEIVE_TIMEOUT
             elif cmd_arg == COMMANDS['down_intermediate'] and self._intermediate_position:
