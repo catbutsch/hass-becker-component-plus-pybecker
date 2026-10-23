@@ -27,7 +27,8 @@ COMMAND_PAIR2 = 0x81  # pair button pressed for 3 seconds (without releasing)
 COMMAND_PAIR3 = 0x82  # pair button pressed for 6 seconds (without releasing)
 COMMAND_PAIR4 = 0x83  # pair button pressed for 10 seconds (without releasing)
 
-COMMAND_FORCEUP = 0x60  # Force move up, ignore a blocking rain sensor, up+down pressed simultaneously
+COMMAND_UPDOWN = 0x60  # ignore a blocking rain sensor, up+down pressed simultaneously
+COMMAND_DOWNUP = 0x70  # ignore a blocking rain sensor, down+up pressed simultaneously
 
 COMMAND_CLEARPOS = 0x90
 COMMAND_CLEARPOS2 = 0x91
@@ -95,8 +96,10 @@ class Becker:
             codes.append(generate_code(channel, unit, COMMAND_UP))
         elif cmd == "UP2":
             codes.append(generate_code(channel, unit, COMMAND_UP5))
-        elif cmd == "FORCEUP":
-            codes.append(generate_code(channel, unit, COMMAND_FORCEUP))
+        elif cmd == "UPDOWN":
+            codes.append(generate_code(channel, unit, COMMAND_UPDOWN))
+        elif cmd == "DOWNUP":
+            codes.append(generate_code(channel, unit, COMMAND_DOWNUP))            
         elif cmd == "HALT":
             codes.append(generate_code(channel, unit, COMMAND_HALT))
         elif cmd == "RELEASE":
@@ -220,7 +223,7 @@ class Becker:
             :param channel: the channel on which the shutter is listening
             :type channel: str
         """
-        await self.send(channel, "FORCEUP")
+        await self.send(channel, "UPDOWN")
 
     async def move_down(self, channel):
         """

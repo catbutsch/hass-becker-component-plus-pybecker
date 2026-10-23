@@ -462,15 +462,21 @@ class BeckerEntity(CoverEntity, RestoreEntity):
             elif cmd_arg == COMMANDS['up_intermediate'] and self._intermediate_position:
                 self._travel_to_position(self._intermediate_pos_up)
                 self._tilt_timeout = time.time()        # reset timeout
-            elif command == COMMANDS['up'] or command == COMMANDS['forceup']:
+            elif command == COMMANDS['up'] or command == COMMANDS['updown']:
                 self._travel_to_position(OPEN_POSITION)
                 self._tilt_timeout = time.time() + TILT_RECEIVE_TIMEOUT
+                # to ignore a rain sensor, an UP command from a remote unit triggers a 'forceup' 
+                # no endless loop because the forceup will be sent by the becker stick, not a remote
+                if command == COMMANDS['up']: 
+                    await self._becker.force_up(self._channel)
             elif cmd_arg == COMMANDS['down_intermediate'] and self._intermediate_position:
                 self._travel_to_position(self._intermediate_pos_down)
                 self._tilt_timeout = time.time()        # reset timeout
             elif command == COMMANDS['down']:
                 self._travel_to_position(CLOSED_POSITION)
                 self._tilt_timeout = time.time() + TILT_RECEIVE_TIMEOUT
+            elif command == COMMANDS['downup']:
+                _LOGGER.debug("%s ignoring cmd DOWNUP because it comes along with UPDOWN", self._name)                            
 
     @callback
     async def _async_stop_travel(self, _):

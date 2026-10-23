@@ -11,7 +11,8 @@ from .pybecker.becker import (
     COMMAND_RELEASE,
     COMMAND_UP,
     COMMAND_UP5,
-    COMMAND_FORCEUP,
+    COMMAND_UPDOWN,
+    COMMAND_DOWNUP,
 )
 
 DOMAIN = "becker"
@@ -53,7 +54,8 @@ COMMANDS = {
     'down': f'{COMMAND_DOWN:02x}'.encode(),
     'down_intermediate': f'{COMMAND_DOWN5:02x}'.encode(),
     'release': f'{COMMAND_RELEASE:02x}'.encode(),
-    'forceup': f'{COMMAND_FORCEUP:02x}'.encode(),
+    'updown': f'{COMMAND_UPDOWN:02x}'.encode(),
+    'downup': f'{COMMAND_DOWNUP:02x}'.encode(),
 }
 
 REMOTE_ID = re.compile(r'(?P<id>[0-9A-F]{5,5}):(?P<ch>[0-9A-F]{1,1})')
