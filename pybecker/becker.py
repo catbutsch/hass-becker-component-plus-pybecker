@@ -224,6 +224,7 @@ class Becker:
             :type channel: str
         """
         await self.send(channel, "UPDOWN")
+        await self.send(channel, "DOWNUP")
 
     async def move_down(self, channel):
         """
