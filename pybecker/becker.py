@@ -226,6 +226,15 @@ class Becker:
         await self.send(channel, "UPDOWN")
         await self.send(channel, "DOWNUP")
 
+    async def release(self, channel):
+        """
+            Send the release command for a given channel.
+        
+            :param channel: the channel on which the shutter is listening
+            :type channel: str
+        """
+        await self.send(channel, "RELEASE")
+
     async def move_down(self, channel):
         """
             Sent the command to move down for a given channel.

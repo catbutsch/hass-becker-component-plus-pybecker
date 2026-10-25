@@ -4,6 +4,7 @@ import logging
 import time
 
 import voluptuous as vol
+import asyncio
 
 from homeassistant.components.cover import (
     ATTR_CURRENT_POSITION,
@@ -467,8 +468,9 @@ class BeckerEntity(CoverEntity, RestoreEntity):
                 self._tilt_timeout = time.time() + TILT_RECEIVE_TIMEOUT
                 # to ignore a rain sensor, an UP command from a remote unit triggers a 'forceup' 
                 # no endless loop because the forceup will be sent by the becker stick, not a remote
-                if command == COMMANDS['up']: 
-                    await self._becker.force_up(self._channel)
+                # if command == COMMANDS['up']: 
+                #     await asyncio.sleep(0.5)
+                #    await self._becker.force_up(self._channel)
             elif cmd_arg == COMMANDS['down_intermediate'] and self._intermediate_position:
                 self._travel_to_position(self._intermediate_pos_down)
                 self._tilt_timeout = time.time()        # reset timeout
